@@ -1,0 +1,30 @@
+# Spécifiez la version de PHP utilisée pour votre application
+version: '8.2.0'
+
+# Définissez les variables d'environnement utilisées par votre application
+env:
+  APP_NAME: plate form e-learning app
+  APP_ENV: production
+  APP_KEY: base64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  APP_DEBUG: 'false'
+  APP_URL: https://platform-e-learning-api-production.up.railway.app/
+  DB_CONNECTION: mysql://root:I00oZmCaab9CrBlmEQUh@containers-us-west-54.railway.app:7624/railway
+  DB_HOST: containers-us-west-54.railway.app
+  DB_PORT: 7624
+  DB_DATABASE: railway
+  DB_USERNAME: root
+  DB_PASSWORD: I00oZmCaab9CrBlmEQUh
+
+# Définissez les commandes de build pour votre application
+build:
+  # Installer les dépendances Composer
+  - run: composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+  # Exécuter les migrations de la base de données
+  - run: php artisan migrate --force
+
+# Déployez votre application sur Railway
+deploy:
+  # Exécutez les commandes de build définies ci-dessus
+  - build
+  # Déployez l'application sur Railway
+  - run: railway deploy
